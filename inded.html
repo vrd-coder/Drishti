@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For You, Drishti 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ffd6e7,#ff9ec9);
+overflow:hidden;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:25px;
+width:100%;
+max-width:400px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+animation:fadeIn 0.6s ease;
+position:relative;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:scale(0.9);}
+to{opacity:1;transform:scale(1);}
+}
+
+h1{
+color:#e91e63;
+margin-bottom:10px;
+}
+
+.gif{
+width:100%;
+border-radius:15px;
+margin:15px 0;
+}
+
+.type-line{
+font-size:1.05em;
+color:#444;
+min-height:1.4em;
+margin-bottom:8px;
+}
+
+.buttons{
+display:flex;
+justify-content:center;
+gap:15px;
+margin-top:20px;
+}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:30px;
+font-weight:600;
+cursor:pointer;
+color:white;
+}
+
+#yesBtn{
+background:linear-gradient(45deg,#ff4fa3,#e91e63);
+}
+
+#noBtn{
+background:#ff8fb8;
+position:relative;
+}
+
+.footer{
+margin-top:15px;
+font-size:12px;
+color:#666;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>For You, Drishti 💖</h1>
+
+<img class="gif" src="yell-shy.gif">
+
+<div id="textLines"></div>
+
+<div class="buttons">
+<button id="yesBtn">Of course 🤝</button>
+<button id="noBtn">No 🥺</button>
+</div>
+
+<div class="footer" id="timer"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+
+/* TIMER FROM 15 MARCH (IST) */
+
+const startDate = new Date("2026-03-15T00:00:00+05:30");
+
+function updateTimer(){
+
+const now = new Date();
+let diff = now - startDate;
+
+let days = Math.floor(diff / (1000*60*60*24));
+diff %= (1000*60*60*24);
+
+let hours = Math.floor(diff / (1000*60*60));
+diff %= (1000*60*60);
+
+let minutes = Math.floor(diff / (1000*60));
+diff %= (1000*60);
+
+let seconds = Math.floor(diff / 1000);
+
+document.getElementById("timer").innerText =
+days+"d "+hours+"h "+minutes+"m "+seconds+"s 💖";
+
+}
+
+setInterval(updateTimer,1000);
+updateTimer();
+
+
+
+/* TYPEWRITER TEXT */
+
+const lines = [
+"Hey Drishti 👀",
+"I wanted to tell you something...",
+"You seem really special ✨",
+"So... will you let me know you better? 👉👈"
+];
+
+let current = 0;
+
+function typeLine(){
+
+if(current >= lines.length) return;
+
+const div = document.createElement("div");
+div.className = "type-line";
+
+document.getElementById("textLines").appendChild(div);
+
+let i = 0;
+
+function typeChar(){
+
+if(i < lines[current].length){
+
+div.textContent += lines[current][i];
+i++;
+setTimeout(typeChar,40);
+
+}else{
+
+current++;
+setTimeout(typeLine,400);
+
+}
+
+}
+
+typeChar();
+
+}
+
+window.onload = typeLine;
+
+
+
+/* RUNAWAY NO BUTTON */
+
+const noBtn = document.getElementById("noBtn");
+
+noBtn.onclick = function(){
+
+const box = document.querySelector(".container");
+
+const maxX = box.offsetWidth - noBtn.offsetWidth - 20;
+const maxY = box.offsetHeight - noBtn.offsetHeight - 20;
+
+noBtn.style.position = "absolute";
+noBtn.style.left = Math.random()*maxX + "px";
+noBtn.style.top = Math.random()*maxY + "px";
+
+};
+
+
+
+/* YES BUTTON */
+
+document.getElementById("yesBtn").onclick = function(){
+
+if(confirm("Are you really sure, Drishti? 💖")){
+showSuccess();
+}
+
+};
+
+
+
+/* SUCCESS PAGE */
+
+function showSuccess(){
+
+document.body.innerHTML = `
+
+<div class="container">
+
+<h1 style="color:#e91e63;">Yesssss 💌</h1>
+
+<img class="gif" src="anime-hug.gif">
+
+<p style="color:#444;">
+Drishti, this just made my day 💞
+</p>
+
+<p style="color:#444;">
+Let's see where this story goes 🫶
+</p>
+
+<button id="instaBtn"
+style="margin-top:20px;background:#e1306c;color:white;
+border:none;border-radius:25px;padding:10px 20px;font-weight:600;">
+Take me to Instagram 💗
+</button>
+
+<div class="footer">
+Maybe the start of something beautiful 💖
+</div>
+
+</div>
+
+<audio src="dilibadat.mp3" autoplay loop></audio>
+
+`;
+
+confetti({
+particleCount:300,
+spread:150,
+origin:{y:0.6}
+});
+
+document.getElementById("instaBtn").onclick = function(){
+window.open("https://instagram.com/bettercallvrd","_blank");
+};
+
+}
+
+</script>
+
+</body>
+</html>
